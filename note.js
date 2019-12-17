@@ -1,0 +1,188 @@
+import { Server } from "https"
+
+https://blog.csdn.net/yangbingbinga/article/details/61417689  require.ensure  按需加载  防止js文件过大
+
+nodejs  path模块
+
+~1.15.2 :=  >=1.15.2 <1.16.0     
+
+^3.3.4 := >=3.3.4 <4.0.0
+npm view element-ui versions
+npm view element-ui version
+npm ls  element-ui （-g）  查看本地某个包的信息
+
+查看项目中那些包可以升级 全局安装npm-check-updates      命令ncu 查看更新信息  ncu  -u 包更新某个包的package.json 再执行npm install
+
+
+//1.单行溢出核心代码
+overflow:hidden; //（顾名思义超出限定的宽度就隐藏内容）
+
+white-space: nowrap; //（设置文字在一行显示不能换行）
+
+text-overflow: ellipsis;//（规定当文本溢出时显示省略符号来代表被修剪的文本）
+
+
+2.多行溢出核心代码
+
+-webkit-line-clamp:2; //（用来限制在一个块元素显示的文本的行数,2表示最多显示2行。 为了实现该效果，它需要组合其他的WebKit属性）
+
+display: -webkit-box; //（和1结合使用，将对象作为弹性伸缩盒子模型显示 ）
+
+-webkit-box-orient://vertical;（ 和1结合使用 ，设置或检索伸缩盒对象的子元素的排列方式 。）
+
+overflow:hidden; //（顾名思义超出限定的宽度就隐藏内容）
+
+text-overflow: ellipsis;//（规定当文本溢出时显示省略符号来代表被修剪的文本）
+
+
+1.Object.assign是深拷贝还是浅拷贝
+浅拷贝
+https://blog.csdn.net/ih1107/article/details/79208860
+function extend(objl , obj2) { 
+    Object . keys (obj2 ) . forEach (function (key) { 
+    objl[key] = obj2[key] 
+    ) ) 
+}}
+$.extends
+Object.extends
+{...obj}解构
+
+深拷贝 
+原生方式：var newObj= JSON.parse(JSON.stringify(someobj));
+jQuery方式：var copiedObject = jQuery.extend(true, {}, originalObject)
+
+10.28
+document.documentElement 就是html
+
+~function(){
+    let computed = function(){
+        const clientW = document.documentElement.clientWidth,
+            designW = 640;
+    if(clientW > 640){
+        document.documentElement.style.fontSize = "100px";
+        return;
+    }
+    document.documentElement.style.fontSize = clientW / designW * 100 + "px";
+    } 
+    computed();
+    window.onresize =function(){
+        computed();
+    }
+}()
+
+超炫3D下拉菜单Makisu  一个jquery插件
+prefixfree.js  该脚本允许您仅在各处使用未前缀的CSS属性。 它在后台运行，仅在需要时将当前浏览器的前缀添加到任何CSS代码中。
+什么时候出现滚动条：当内容比容器的宽度大时就会出现，移动端开发，在不设置meta标签属性时，html文档的宽度是980，超出手机设备的宽度，
+这种情况下不会出现滚动条。
+
+html  document.documentElement  
+body  document.body
+head  document.head
+pc端网页在手机上浏览出现滚动条的原因：1.网页固定宽度，手机浏览时设置vp,视口宽度和设备宽度一样，此时内容
+宽度不变大于视口宽度，就会在移动端设备上出现滚动条， 从而衍生出一种移动端布局的解决方式，流式响应式布局
+方案：外层盒子的宽度都是百分比设定的，很少有固定值（里面一些小元素可以固定）
+
+DPR 像素密度比为2 移动端开发时准备的图片大小是实际看到的2倍
+DPR 像素密度比为3 移动端开发时准备的图片大小是实际看到的3倍
+
+window.innerHeight  document.documentElement.clientHeight指的是视口的高度也就是html的高度
+区别是前者包括滚动条的宽度，后者不包括
+document.body.offsetHeight 网页body主体部分的总高度
+
+shouldComponentUpdate(nextProps, nextState) {
+    // console.log('nextProps', nextProps);
+    console.log('nextState', nextState);
+    if (nextState.mobile && (/1[3|4|5|7|8]\d{9}/.test(nextState.mobile)) && nextState.password ) {
+        this.btnDisable = true
+    } else {
+        this.btnDisable = false
+    }
+    if (nextState.codeBtnText === '发送验证码') {
+        this.codeBtnDisable = false
+    }
+    return true
+}
+function a(a,b,c){console.log(a,b,c)}
+a.apply(null,[1,2,3])  // 1 2 3
+a.call(null,1,2,3)     // 1 2 3
+a(...arg)
+普通函数中参数的集合用arguments  箭头函数中不能用arguments所以用 ...arg
+
+
+请求头中Content-Type:application/json  和  x-www-form-urlencoded的区别
+前者携带的请求参数格式是对象，后者是&连接的字符串
+
+
+document.body.innerHTML="<h1>标题</h1>"  //正确
+document.body.appendChild("<h1>标题</h1>")  //错误,不是一个节点类型
+
+创建一个静态服务器
+yarn global add http-server   进入到项目目录下，执行http-server  开启一个服务器端口  8080    访问http:localhost:8080/index.html
+字符串有trim()  trimLeft()  trimRight()去除空格方法
+
+
+要看的链接  https://www.jianshu.com/p/50fe3fb9f7c3     
+
+转化为数组
+
+11/4
+1.缓存问题
+
+
+
+//flexiable移动端可伸缩布局
+下图为一个简单得不能再简单的示意图（假装它是一个宽为 750px  的移动端设计稿）：
+目前Flexible会将视觉稿分成**100份**（主要为了以后能更好的兼容vh和vw），而每一份被称为一个单位a。同时1rem单位被认定为10a。针对我们这份视觉稿可以计算出：
+
+换算
+1a = 7.5px
+1rem = 75px
+
+上面这一小段提示可以说是 flexible.js 的精华所在了。但你只需要记住1rem = 75px 就好。比如上面云库网这个 LOGO 距离左边60px，上边42px，图片自身宽、高都是80px。当然你也可以直接用这些数值：
+
+传统做法
+.logo{
+width:80px;
+height:80px;
+margin-left:60px;
+margin-top:42px;
+}
+但我们是要在移动端做适配的，这样写还有什么适配可言？我们可以把上面的像素转换成 rem。rem 是根据根元素（html 的字体大小）来进行计算的，这样就可以很方便地让我们把设计稿等比缩放到与实践终端相匹配的大小。
+
+移动适配
+.logo{
+width: 1.066667rem;
+height: 1.066667rem;
+margin-left: 0.8rem;
+margin-top: 0.56rem
+
+
+
+
+ajax详解 https://blog.csdn.net/weixin_44260420/article/details/93722037
+
+
+str.match(/\d{2}/g)
+// ["12", "45", "68"]
+!!str.match(/\d{2}/g)   //true
+
+https://blog.csdn.net/zchcode/article/details/14448209
+background : background-color || background-image || background-repeat || background-attachment || background-position
+
+ 
+vue 动态加载组件 component: (r) =>require.ensure([],()=>r(require('@/App')),'index'),
+
+
+
+
+
+
+react 
+1.非页面级组件  this.props.history.push不可用   用@withRouter 包裹组件 （from 'react-router-dom'）  
+2.函数级组件  useRouteMatch,useParams 获取match params等（from 'react-router-dom'） 
+3.react嵌套路由  在a页面<Switch></Switch>包裹子Route  path是完整路径 ${this.props.match.url}/:id
+4.跳转 Link或者NavLink（from 'react-router-dom'）
+5.react-router-dom网站 https://reacttraining.com/react-router/web/guides/quick-start
+6.create-react-app  配置文件   npm run eject 
+7.craeate-react-app  代理  http-proxy-middleware 
+8.yarn add *** --dev  
