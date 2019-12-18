@@ -188,3 +188,6 @@ react
 8.yarn add *** --dev  
 
 9.flex 总结 https://www.jianshu.com/p/24a655116f30
+
+10一篇文章让你搞懂git pull 和git pull --rebase的区别  https://www.cnblogs.com/chenyablog/p/10308058.html
+
