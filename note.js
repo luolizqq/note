@@ -186,3 +186,5 @@ react
 6.create-react-app  配置文件   npm run eject 
 7.craeate-react-app  代理  http-proxy-middleware 
 8.yarn add *** --dev  
+
+9.flex 总结 https://www.jianshu.com/p/24a655116f30
