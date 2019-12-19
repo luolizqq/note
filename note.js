@@ -1,4 +1,5 @@
 import { Server } from "https"
+import { auto } from "async"
 
 https://blog.csdn.net/yangbingbinga/article/details/61417689  require.ensure  按需加载  防止js文件过大
 
@@ -191,3 +192,34 @@ react
 
 10一篇文章让你搞懂git pull 和git pull --rebase的区别  https://www.cnblogs.com/chenyablog/p/10308058.html
 
+11 font:italic bold 12px/30px Georgia, serif;
+12 对于css（less,sass）文件所在目录可以配置alias简写 引入的时候 在css文件中引入 @import 前面要加~  但是在js文件引入还是用import不需要加~
+13  path模块 path.resolve()将多个路径合并，自动加/   
+
+14 函数和混合的区别 https://www.cnblogs.com/wujianbufengsao/articles/6835977.html
+15 定义混合时带括号和不带括号的区别  https://www.cnblogs.com/xiyangbaixue/p/4151615.html
+16 修改placeholder样式 
+::-webkit-input-placeholder {
+    color: #ccc;
+}
+17  export default connect(({home})=>({home}))(Home)  不使用@
+    使用@ @mixin({padstr})  相当于mixin({padstr})(Home) 改变了Home本身 最后导出 expport default Home
+
+mapDispatchToProps的用法  https://blog.csdn.net/suwu150/article/details/79415085
+
+18 默认导出箭头函数 export default (参数)=>{}
+
+19 switch的用法
+switch(type){
+    case "salesAmount":
+        value = value.replace(/[^0-9]/g,'');
+        break;
+    case "customTel":
+        value = this.padstr(value.replace(/[^0-9]/g,''),[3,7]," ");
+        break;
+    case 'customName':
+        break;
+    default:;
+}
+20  button是inline-block元素 可以设置宽高 但是要让他水平居中的话 转化为块 再 margin:0 auto;
+21  import styles from "./index.less" 一定要加.less后缀
