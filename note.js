@@ -223,3 +223,5 @@ switch(type){
 }
 20  button是inline-block元素 可以设置宽高 但是要让他水平居中的话 转化为块 再 margin:0 auto;
 21  import styles from "./index.less" 一定要加.less后缀
+22  原生oninput和 onchange作用一样，都是输入一改变就触发,onblur是失焦触发
+
