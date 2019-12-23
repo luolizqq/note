@@ -1,5 +1,6 @@
 import { Server } from "https"
 import { auto } from "async"
+import { render } from "react-dom"
 
 https://blog.csdn.net/yangbingbinga/article/details/61417689  require.ensure  按需加载  防止js文件过大
 
@@ -224,4 +225,52 @@ switch(type){
 20  button是inline-block元素 可以设置宽高 但是要让他水平居中的话 转化为块 再 margin:0 auto;
 21  import styles from "./index.less" 一定要加.less后缀
 22  原生oninput和 onchange作用一样，都是输入一改变就触发,onblur是失焦触发
+23 immutable 常用api  https://www.cnblogs.com/chris-oil/p/8492349.html
+24 react 引入多个类 https://blog.csdn.net/qq_36742720/article/details/85766757
+25关于raect声明周期
+26.render什么时候执行，只要setState执行，无论值是否改变都会re-render,因为shouldComponentUpdate默认返回true
+子组件的componentWillReceiveProps在第一次渲染的时候不会执行，当父组件re-render的时候才会执行，先执行componentWillREceiveProps,
+然后再执行shouldComponentUpdate
+组件本身setState不会触发自己componentWillReceiveProps方法，但是会触发shouldComponentUpdate
+shouldComponentUpdate什么时候执行，1.自身组件setState的时候，2.父组件re-render的时候执行
+componentWillREceive什么时候执行，父组件re-render的时候才会执行
 
+28.为什么组件本身setState不会触发componentWillREcieveProps呢？
+通过this.setState方法触发的更新过程不会调用这个函数，这是这个函数适合根据新的props值（也就是参数nextProps）来计算出是不是要更新内部状态state。更新组件内部状态的方法是this.setState，如果this.setState的调用导致componentWillReceiveProps(nextProps)的再一次调用，那就是一个死循环了。
+
+26. shouldComponentUpdate(nextProps, nextState) {
+    return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state),fromJS(nextState))
+  }
+
+27 什么时候在子组件的componentWillRececeive中使用setState?(state的状态既要由父组件改变，也要由自身改变)
+https://www.jianshu.com/p/f782d3ec59e8
+如果不需要自身改变，那么在渲染的时候直接使用this.props 
+如果非得用state,那么要在componentWillREceiveprops中setState(加条件判断) 并且在componentDIdMount中setSTate一次,因为shouldComponentUpdate默认返回true
+子组件首次渲染不会触发componentWillREceiveprops
+28 componentWillREceiveProps只有一个参数nextProps  shouldComponentUpdate有两个参数 nextProps nextState 
+所以shouldComponentUpdate有两次更新的机会 一次是父组件传重新渲染这时是props有变化，一次是组件本身setState是state有变化
+32 通常引起componentWillReceiveProps生命周期的有父组件传过来的prop的改变，connect(redux里面state的变化)，还有url的变化
+
+29  判断两个对象或数组有没有实质性改变 is(fromJS(this.props.proData), fromJS(nextProps.proData)) immutable.js
+
+30  如何让子组件在state或props真正有改变时shouldComponentWillUpdate才返回true?
+shouldComponentUpdate(nextProps, nextState) {
+    return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state), fromJS(nextState))
+}
+31 打印 react this.props
+
+32 在react的class类中写异步方法
+fetchlist = async ()=>{
+    const type = this.props.match.params.type;
+    const res = await list(type);
+    this.setState({list:res.data.data})
+}
+
+33 react-router4相关api使用方法
+https://www.jianshu.com/p/c6fad9831d3b
+
+34  react-router-dom中 Redirect在使用的时候外面必须有Switch包裹
+
+35 this.props.location.pathname和this.props.match.path以及this.props.match.url的区别
+前者是当前页面匹配到的路径，中间跟在其使用位置有关系，是该语句所在组件的Route路由固定写死的路径 如 /record/:type
+后者也是跟当前书写位置（在哪个组件）有关，该组件所匹配的真是路径  如/record/failed
