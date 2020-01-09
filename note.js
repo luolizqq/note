@@ -1,6 +1,7 @@
 import { Server } from "https"
 import { auto } from "async"
 import { render } from "react-dom"
+import { PureComponent } from "react"
 
 https://blog.csdn.net/yangbingbinga/article/details/61417689  require.ensure  按需加载  防止js文件过大
 
@@ -274,3 +275,88 @@ https://www.jianshu.com/p/c6fad9831d3b
 35 this.props.location.pathname和this.props.match.path以及this.props.match.url的区别
 前者是当前页面匹配到的路径，中间跟在其使用位置有关系，是该语句所在组件的Route路由固定写死的路径 如 /record/:type
 后者也是跟当前书写位置（在哪个组件）有关，该组件所匹配的真是路径  如/record/failed
+
+
+关于移动端rem响应式布局
+手写setRem 
+1、(function(doc, win) {
+    var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function() {
+            var clientWidth = docEl.clientWidth;
+            if (!clientWidth) return;
+            docEl.style.fontSize = 20 * (clientWidth / 320) + 'px';
+        };
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener('DOMContentLoaded', recalc, false);
+})(document, window);
+或者
+2.
+var winWidth = window.innerWidth;
+var winHeight = window.innerHeight;
+var perRemPx = document.getElementsByTagName("html")[0].clientWidth / 7.5;
+
+window.addEventListener("resize", function () {
+    perRemPx = document.getElementsByTagName("html")[0].clientWidth / 7.5;
+    document.getElementsByTagName("html")[0].style.fontSize = perRemPx + "px";
+});
+document.getElementsByTagName("html")[0].style.fontSize = perRemPx + "px";
+
+注意：如果设计稿是750 font-size是100px  比值就是7.5
+如果设计稿是640   font-size是100px   比值就是6.4
+这里的font-size是当屏幕为750px的时候，html元素上的font-size是100px;
+另注：html不用设置font-size:100px  js会自动计算设置
+
+
+
+
+css修改滚动条样式  https://www.cnblogs.com/sherryweb/p/11023311.html
+
+
+token（智能编码）与session（DRG）登录的区别
+https://www.cnblogs.com/shoshana-kong/p/10932718.html
+
+nginx基本用法
+
+https://segmentfault.com/a/1190000014588132
+
+webpack definePlugin的用法
+https://blog.csdn.net/a250758092/article/details/81234419
+关于process.env.NODE_ENV和cross-env的的用法
+https://www.jianshu.com/p/c8f9c61c2f20
+"start": "cross-env API_ENV=local umi dev" 相当于将API_ENV这个变量挂在了 process.env上，在node环境以及webpack的配置文件config中可以
+访问改变量process.env.API_ENV  但是在自定义js文件不可访问 这时就用到了webpack的definePlugin
+关于yarn.lock文件的作用
+https://www.cnblogs.com/yangzhou33/p/11494819.html
+
+vue
+$attrs  $listeners
+https://www.jb51.net/article/132371.htm
+
+this.$nextTick的用法 https://www.jianshu.com/p/a7550c0e164f
+
+
+const path = require("path");
+const files= require.context("./components",false,/\.js$/);
+const modules = {};
+console.log("files",files.keys())
+files.keys().forEach(key => {
+  console.log("key",key)
+  const name = path.basename(key, '.js')
+  console.log("name",name)
+  console.log("file",files(key))
+  modules[name] = files(key).default || files(key)
+})
+console.log("modules",modules)
+
+
+
+object.defineProperty和object.freeze和object.seal的用法
+https://www.jianshu.com/p/8fe1382ba135
+
+getDerivedStateFromProps用法 为什么你不需要 getDerivedStateFromProps
+https://www.jianshu.com/p/cafe8162b4a8
+
+
+PureComponent的原理  https://www.jianshu.com/p/ff993656a66b
