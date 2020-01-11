@@ -360,3 +360,62 @@ https://www.jianshu.com/p/cafe8162b4a8
 
 
 PureComponent的原理  https://www.jianshu.com/p/ff993656a66b
+关于pureComponent和React.memo的用法  https://www.jianshu.com/p/b3d07860b778
+
+子组件使用父组件传来的方法，方法中的this指的是父组件中的this
+
+
+React.createContext的用法
+https://blog.csdn.net/qq_30638831/article/details/89045908  注意将createContext写到一个单独的文件里，子组件和父组件引入
+
+
+export default后面只能跟class Function 表达式
+不可  export default const App={}  可以export default App;
+
+
+componentDidUpdate指的是更新之前的旧值
+
+
+
+useEffect的用法    https://www.jianshu.com/p/6e525c3686ab
+useEffect用法
+useEffect(()=>{
+    const timer = setTimeout(()=>{
+      // setCount(count+1)
+    },1000);
+    console.log("useEffect执行");
+    return ()=>{console.log("清除");clearInterval(timer)};
+    
+  })
+
+
+
+  useEffect是在componentDidMount componentDidUpdate  componentWillUnmount这三个声明周期的组合,也就是在渲染之后执行
+  (但并不会在首次渲染前执行两次，只会在渲染之前执行一次)而static getDerivedStateFromProps 是在渲染之前执行
+
+  useEffect如果返回一个函数，那么这个函数会在组件卸载的时候执行，如果不返回的函数的话，组件卸载的时候不会执行useEffect中的内容
+  function Example({number}){
+    const [count,setCount] =useState(number);
+    console.log("子组件创建")
+    useEffect(()=>{
+      const timer = setTimeout(()=>{
+        // setCount(count+1)
+      },1000);
+      console.log("useEffect执行");
+      return ()=>{console.log("清除");clearInterval(timer)};
+    },[number]) // 注意这里是number不是"number" 属性number是父组件传来的，并由父组件的state控制，如果父组件改变number的值
+    //this.setState({number:this.state.number}})如果父组件不是继承自React.PureComponent,那么父组件会重新渲染，如果子组件
+    //继承自 React.PureComponent或者函数式组件由React.memo(函数式组件)，那么子组件不会重新渲染。如果子组件没有继承，那么子组件会
+    //重新创建，但是由于useEffect有第二个参数，只有当number发生变化的时候才会useEffect才会重新执行，render也不会执行。
+    return (
+      <div onClick={()=>{setCount(count+1)}}>次数{number}</div>
+    )
+  }
+  export default React.memo(Example);
+
+
+
+
+
+  无论是组件还是元素只要有key属性，key变了，这个组件就会销毁重新创建
+
