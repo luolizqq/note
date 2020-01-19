@@ -419,3 +419,21 @@ useEffect(()=>{
 
   无论是组件还是元素只要有key属性，key变了，这个组件就会销毁重新创建
 
+
+
+  bable和pollyfill
+  Babel默认只转换新的JavaScript句法（syntax），而不转换新的API，比如Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise等全局对象，以及一些定义在全局对象上的方法（比如Object.assign）都不会转码。
+
+  举例来说，ES6在Array对象上新增了Array.from方法。Babel就不会转码这个方法。如果想让这个方法运行，必须使用babel-polyfill，为当前环境提供一个垫片。
+  
+  解释二：
+  提示：polyfill 指的是“用于实现浏览器不支持原生功能的代码”，比如，现代浏览器应该支持 fetch 函数，对于不支持的浏览器，网页中引入对应 fetch 的 polyfill 后，这个 polyfill 就给全局的window对象上增加一个fetch函数，让这个网页中的 JavaScript 可以直接使用 fetch 函数了，就好像浏览器本来就支持 fetch 一样。在这个链接上 https://github.com/github/fetch 可以找到 fetch polyfill 的一个实现
+  
+  
+
+  跨域的三种方式  https://segmentfault.com/a/1190000010237531
+
+
+  箭头函数的async形式
+  
+  const giveMeOne = async () => 1;
