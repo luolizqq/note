@@ -225,3 +225,5 @@ switch(type){
 21  import styles from "./index.less" 一定要加.less后缀
 22  原生oninput和 onchange作用一样，都是输入一改变就触发,onblur是失焦触发
 
+23  this.props.match.params   this.props.location.url  this.props.location.pathname
+
