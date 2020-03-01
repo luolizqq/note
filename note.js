@@ -581,7 +581,7 @@ scrollTop:元素向上滚动的高度
 关于 window.history的原理
 https://www.kmbox.cn/html/help/362.html
 react 由A页面携带state跳转到B页面，刷新b页面，this.props.location.state不变，并且
-history的长度也不变,state内部存的东西存储在window.history中。（hashHistory会刷新？）
+history的长度也不变,state内部存的东西存储在window.history中。（hashHistory会刷新？当hash值改变的时候，history的长度会加1，state也会清空）
 react  browserHistory的原理：
 React Router 是建立在 history 之上的。
 简而言之，一个 history 知道如何去监听浏览器地址栏的变化，
@@ -604,7 +604,7 @@ git config --list
 
 智能编码项目遇到问题总结
 1.modal.confirm（）中的表单无法赋值
-
+2.注意moment(val)  val一定要存在 不能为null
 
 
 
@@ -618,8 +618,42 @@ switch的特殊点  https://blog.csdn.net/u013982652/article/details/80391522
 
 
 如何测试本机是否连接到github或者gitlab仓库
-ssh -vT ''
+看是否ping得通
+只有设置了ssh key才能用ssh的方式download项目
+查看是否设置了ssh key:  ls -al ~/.ssh
 
 
+export default ,export的区别
+export用法：
+export var a=3;
+export function aa(){}
+export class 
+
+或者
+var a=1;
+function b(){}
+export {a,b}
+
+不能
+var t=1;
+export t;
 
 
+在引入的时候：
+import * as all;用的时候all.a
+import {a,b} from 
+
+import default 的用法：
+var a=1;
+export default a;
+
+export default function aa(){}
+export default {}
+
+不能export export var z=1;
+
+import 任意变量名
+
+通过export方式导出，在导入时要加{ }，export default则不需要
+
+import aa ,{a,b} from "./b"这种情况是b文件中既有export default 又有export  
