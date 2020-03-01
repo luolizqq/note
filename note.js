@@ -602,8 +602,24 @@ $ git config user.email “gitlab@xx.com”
 git config --list
 
 
-11
-2222
+智能编码项目遇到问题总结
+1.modal.confirm（）中的表单无法赋值
+
+
+
+
+
+
+
+switch的特殊点  https://blog.csdn.net/u013982652/article/details/80391522
+可以看到不加break的话会继续向下执行，直到遇到break或return或switch结束为止
+当遇到匹配条件后如果没有及时 break 会一直向下不在判断知道遇到break或者return才会退出
+
+
+
+如何测试本机是否连接到github或者gitlab仓库
+ssh -vT ''
+
 
 
 
