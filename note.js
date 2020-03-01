@@ -588,5 +588,8 @@ React Router 是建立在 history 之上的。
 并解析这个 URL 转化为 location 对象，
 然后 router 使用它匹配到路由，最后正确地渲染对应的组件。
 
+1
+
+
 
 
