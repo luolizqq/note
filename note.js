@@ -588,9 +588,19 @@ React Router 是建立在 history 之上的。
 并解析这个 URL 转化为 location 对象，
 然后 router 使用它匹配到路由，最后正确地渲染对应的组件。
 
-1
-2222
-33333
+关于git 
+1.什么时候会出现 Your branch is ahead of 'origin/master' by 2 commits.
+接连多次commit
+2.git config 
+全局配置
+$ git config --global user.name “github’s Name”
+$ git config --global user.email “github@xx.com” 
+项目单独配置
+$ git config user.name “gitlab’s Name”
+$ git config user.email “gitlab@xx.com”
+在项目中查看的当前配置
+git config --list
+
 
 
 
