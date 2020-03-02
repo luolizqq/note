@@ -391,7 +391,7 @@ useEffect(()=>{
 
 
   useEffect是在componentDidMount componentDidUpdate  componentWillUnmount这三个声明周期的组合,也就是在渲染之后执行
-  (但并不会在首次渲染前执行两次，只会在渲染之前执行一次)而static getDerivedStateFromProps 是在渲染之前执行
+  (但并不会在首次渲染之后执行两次，只会在渲染之后执行一次)而static getDerivedStateFromProps 是在渲染之前执行
 
   useEffect如果返回一个函数，那么这个函数会在组件卸载的时候执行，如果不返回的函数的话，组件卸载的时候不会执行useEffect中的内容
   function Example({number}){
@@ -437,3 +437,25 @@ useEffect(()=>{
   箭头函数的async形式
   
   const giveMeOne = async () => 1;
+
+
+  2020/2/25
+react中key的作用
+https://www.jianshu.com/p/fb52ea055c71
+可以说，这个 unique key 和数据库中的 primary key 差不多，都是为了对数据进行 唯一标识。我们在给列表中的 子组件 设置 key 值的时候，尽量保证其唯一性，当然直接使用数据的 后台ID 是最好不过了。
+一个 key 对应一个组件，当组件需要移动和组件之间需要交换的时候，也就是涉及到数组 动态变化 的时候，可以方便 React.js 快速找出列表中需要重新渲染的组件，来 避免重新渲染整个列表，节省开销。如你所见，这个属性 key 是 React.js 作为内部数据使用的，我们虽然把 key 传给了子组件，但是在子组件的内部，是无法通过 props 访问的。
+不过，在商品列表的例子中，Item 数组中的数据仅仅用于展示，没有涉及到数组的变更，使用遍历中的 index 作为 key，也是没有问题的\
+
+
+&& || 逻辑运算的返回值:返回的是运算符左边或者右边的值，不一定为布尔
+
+JS &&和||返回值
+
+&&首先计算其左边的表达式，如果它的值为false或可被转换为false(null、NaN、0或undefined),那么将返回左边表达式的值，否则，它将计算右边的表达式， 并返回这个表达式结果作为 &&运算的结果。
+||首先计算其左边的表达式，如果它的值不为false或不可被转换为false(null、NaN、0或undefined),那么将返回左边表达式的值，否则，它将计算右边的表达式， 并返回这个表达式结果作为||运算的结果。
+
+var a = “aa” && “bb”;结果a = “bb”;
+
+var a = “aa” || “bb”;结果a = “aa”;
+
+
