@@ -1,7 +1,12 @@
+大牛博客
+https://www.jianshu.com/u/a9802e44127d
+
+
 import { Server } from "https"
 import { auto } from "async"
 import { render } from "react-dom"
 import { PureComponent } from "react"
+import { isAbsolute } from "upath";
 
 https://blog.csdn.net/yangbingbinga/article/details/61417689  require.ensure  按需加载  防止js文件过大
 
@@ -196,7 +201,18 @@ react
 
 11 font:italic bold 12px/30px Georgia, serif;
 12 对于css（less,sass）文件所在目录可以配置alias简写 引入的时候 在css文件中引入 @import 前面要加~  但是在js文件引入还是用import不需要加~
-13  path模块 path.resolve()将多个路径合并，自动加/   
+13  path模块 path.resolve()将多个路径合并，自动加/  
+var path = require("path")     //引入node的path模块
+path.resolve('/foo/bar', './baz')   // returns '/foo/bar/baz'
+path.resolve('/foo/bar', 'baz')   // returns '/foo/bar/baz'
+path.resolve('/foo/bar', '/baz')   // returns '/baz'
+path.resolve('/foo/bar', '../baz')   // returns '/foo/baz'
+path.resolve('home','/foo/bar', '../baz')   // returns '/foo/baz'
+path.resolve('home','./foo/bar', '../baz')   // returns '/home/foo/baz'
+path.resolve('home','foo/bar', '../baz')   // returns '/home/foo/baz'
+从后向前，若字符以 / 开头，不会拼接到前面的路径(因为拼接到此已经是一个绝对路径)；
+若以 ../ 开头，拼接前面的路径，且不含最后一节路径；
+若以 ./ 开头 或者没有符号 则拼接前面路径； 
 
 14 函数和混合的区别 https://www.cnblogs.com/wujianbufengsao/articles/6835977.html
 15 定义混合时带括号和不带括号的区别  https://www.cnblogs.com/xiyangbaixue/p/4151615.html
@@ -434,6 +450,8 @@ useEffect(()=>{
   跨域的三种方式  https://segmentfault.com/a/1190000010237531
 
 
+23  this.props.match.params   this.props.location.url  this.props.location.pathname
+
   箭头函数的async形式
   
   const giveMeOne = async () => 1;
@@ -459,3 +477,212 @@ var a = “aa” && “bb”;结果a = “bb”;
 var a = “aa” || “bb”;结果a = “aa”;
 
 
+vue-pc项目
+在使用viewUI引入组件时，main.js
+import ViewUI from 'view-design';
+import 'view-design/dist/styles/iview.css';
+Vue.use(ViewUI);
+这种方式是全局引入（相当于引入并注册了所有组件），可以直接在其他vue模版中使用组件，不需要再注册
+按需引入
+main.js
+import 'view-design/dist/styles/iview.css';
+配置.bablerc文件
+在其他vue模版文件中需要import { Button, Table } from 'view-design';
+引入需要的组件然后注册才可以使用；
+vue如何修改像iview  element-ui等第三方组件的样式
+1.深度作用选择器 >>> (css)  /deep/ (less  sass)
+2.去掉scoped
+3.写两个style（一个有scoped ,一个没有scoped）
+https://www.cnblogs.com/mengfangui/p/9183593.html
+https://www.jianshu.com/p/bef0b16cc22c
+https://blog.csdn.net/yujing1314/article/details/102294236
+
+
+在父元素中，第一个子元素设置margin-top,发现没有效果，结果是设置在了父元素上，并且和父元素本身具有的margin-top合并，本来30，设置50，就是50
+解决方法：
+1、修改父元素的高度，增加padding-top样式模拟（padding-top：1px；常用）
+2、为父元素添加overflow：hidden；样式即可（完美）
+3、为父元素或者子元素声明浮动（float：left；可用）
+4、为父元素添加border（border:1px solid transparent可用）
+5、为父元素或者子元素声明绝对定位
+https://www.cnblogs.com/ranyonsue/p/5461749.html
+
+
+当img和文字并排显示时会出现上下对不齐的情况
+用绝对定位或者浮动来解决+margin
+
+绝对定位和浮动都会脱离文档流  但是浮动有文字环绕  绝对定位没有，绝对定位会盖住文字
+
+
+垂直分割线的实现方式
+{
+    border-right:1px solid #666;
+    padding-right:10px;
+    padding-left:10px;
+}
+
+mac vscode快捷键 https://segmentfault.com/a/1190000012811886
+command +z 撤销
+command + shift +z 取消撤销
+
+
+
+css
+z-index只能在position属性值为relative或absolute或fixed的元素上有效
+
+
+vue
+子组件使用父组件的方法 https://www.cnblogs.com/jin-zhe/p/9523782.html
+如何给自定义组件添加事件：在自定义组件的标签名上设置@事件名=“方法”  在组件内部通过this.$emit("事件名")触发自定义事件 
+父组件向子组件传递数据
+https://www.jianshu.com/p/d0c90ccf8824  
+
+vue-router  导航守卫
+具体钩子的用法
+组件内 beforeRouteUpdate ： 如果目的地和当前路由相同，只有参数发生了改变 (比如从一个用户资料到另一个 /users/1 -> /users/2)，你需要使用 beforeRouteUpdate 来响应这个变化 (比如抓取用户信息)。
+创建router时scrollBehavior的作用是控制页面路由切换时的滚动行为
+
+// 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
+    // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
+    这种情况组件的生命周期还会执行吗
+
+
+关于浏览器导航
+当点击浏览器的前进后退按钮时，到达的页面会保持原来的样子，比如原来时滚动到底部的状态，返回或前进到这个
+页面的时候还是滚动到底部的状态
+
+如何判断一个字符串能否转化为数字,或者text类型的input框转化为number
+先parseInt后isNaN
+
+
+calc用法：https://segmentfault.com/a/1190000019392639
+height: calc(100vh - 514px);calc可以计算不同单位的数值
+最后，calc()使计算更加清晰。如果你使一组项目为它们父元素容器宽度的 1/6，你可能这么写：
+
+.foo {
+    width: 16.666666667%;
+}
+然而，它能够更加清晰并具有可读性：
+
+.foo {
+    width: calc(100% / 6);
+}
+对于不支持 calc() 的浏览器，整个属性值表达式将被忽略。不过我们可以对那些不支持 calc() 的浏览器，使用一个固定值作为降级方案。
+
+.foo {
+    width: 90%; 
+    width: calc(100% - 50px);
+}
+
+定位的元素设置宽度高度百分比是相对于谁？？？
+https://www.cnblogs.com/djlxs/p/6123294.html
+
+块元素上下左右居中
+1.position:absolute left:50% top:50% margin-left:-50px margin-top:-50px
+1.position:absolute left:50% top:50% transform:translate3d(-50%,-50%,0)
+1.position:absolute left:calc(50%-50px) top:calc(50%-50px)
+
+关于单位 vh vw
+100vh指的是浏览器视口（浏览器可见宽度，可见高度，就是一屏的宽度高度）的高度
+
+关于定位和浮动脱离文档流：https://www.cnblogs.com/sylz/p/5701549.html
+设置了absolute的元素脱了了文档流，元素在没有设置宽度的情况下，宽度由元素里面的内容决定（浮动也是）
+当一个块元素相对于页面文档定位时，top指的是距离页面最顶部的高度，bottom指的是距离首屏底部的距离，
+当页面向上滚动，bottom的参考点也会上移，因为第一屏也向上移动了
+
+
+获取浏览器高度，视口高度
+https://blog.csdn.net/fly_wugui/article/details/81110173
+
+搞清楚clientHeight,scrollHeight,offsetHeight，scrollTop的区别
+https://blog.csdn.net/qq_35430000/article/details/80277587
+clientHeight ：高度+上下padding
+offsetHeight:高度+上下padding+上下bodrder
+scrollHeight:高度+下border+溢出文本高度
+scrollTop:元素向上滚动的高度
+
+
+关于 window.history的原理
+https://www.kmbox.cn/html/help/362.html
+react 由A页面携带state跳转到B页面，刷新b页面，this.props.location.state不变，并且
+history的长度也不变,state内部存的东西存储在window.history中。（hashHistory会刷新？当hash值改变的时候，history的长度会加1，state也会清空）
+react  browserHistory的原理：
+React Router 是建立在 history 之上的。
+简而言之，一个 history 知道如何去监听浏览器地址栏的变化，
+并解析这个 URL 转化为 location 对象，
+然后 router 使用它匹配到路由，最后正确地渲染对应的组件。
+
+关于git 
+1.什么时候会出现 Your branch is ahead of 'origin/master' by 2 commits.
+接连多次commit
+2.git config 
+全局配置
+$ git config --global user.name “github’s Name”
+$ git config --global user.email “github@xx.com” 
+项目单独配置
+$ git config user.name “gitlab’s Name”
+$ git config user.email “gitlab@xx.com”
+在项目中查看的当前配置
+git config --list
+
+
+智能编码项目遇到问题总结
+1.modal.confirm（）中的表单无法赋值
+2.注意moment(val)  val一定要存在 不能为null
+
+
+
+
+
+
+switch的特殊点  https://blog.csdn.net/u013982652/article/details/80391522
+可以看到不加break的话会继续向下执行，直到遇到break或return或switch结束为止
+当遇到匹配条件后如果没有及时 break 会一直向下不在判断知道遇到break或者return才会退出
+
+
+
+如何测试本机是否连接到github或者gitlab仓库
+看是否ping得通
+只有设置了ssh key才能用ssh的方式download项目
+查看是否设置了ssh key:  ls -al ~/.ssh
+
+
+export default ,export的区别
+export用法：
+export var a=3;
+export function aa(){}
+export class 
+
+或者
+var a=1;
+function b(){}
+export {a,b}
+
+不能
+var t=1;
+export t;
+
+
+在引入的时候：
+import * as all;用的时候all.a
+import {a,b} from 
+
+import default 的用法：
+var a=1;
+export default a;
+
+export default function aa(){}
+export default {}
+
+不能export export var z=1;
+
+import 任意变量名
+
+通过export方式导出，在导入时要加{ }，export default则不需要
+
+import aa ,{a,b} from "./b"这种情况是b文件中既有export default 又有export  
+
+
+package.json和package-lock.json和yarn.lock的作用
+https://www.jianshu.com/p/5ecdce174a97
+https://www.jianshu.com/p/9ae748598f1a
