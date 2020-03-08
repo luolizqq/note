@@ -240,6 +240,13 @@ switch(type){
 22  原生oninput和 onchange作用一样，都是输入一改变就触发,onblur是失焦触发
 23 immutable 常用api  https://www.cnblogs.com/chris-oil/p/8492349.html
 24 react 引入多个类 https://blog.csdn.net/qq_36742720/article/details/85766757
+
+react生命周期执行顺序
+https://www.cnblogs.com/wfblog/p/11842622.html
+forceUpdate方法被调用时会依次执行哪些生命周期函数？
+componentWillUpdate render  componentDidUpdate
+
+
 25关于raect声明周期
 26.render什么时候执行，只要setState执行，无论值是否改变都会re-render,因为shouldComponentUpdate默认返回true
 子组件的componentWillReceiveProps在第一次渲染的时候不会执行，当父组件re-render的时候才会执行，先执行componentWillREceiveProps,
@@ -249,7 +256,8 @@ shouldComponentUpdate什么时候执行，1.自身组件setState的时候，2.�
 componentWillREceive什么时候执行，父组件re-render的时候才会执行
 
 28.为什么组件本身setState不会触发componentWillREcieveProps呢？
-通过this.setState方法触发的更新过程不会调用这个函数，这是这个函数适合根据新的props值（也就是参数nextProps）来计算出是不是要更新内部状态state。更新组件内部状态的方法是this.setState，如果this.setState的调用导致componentWillReceiveProps(nextProps)的再一次调用，那就是一个死循环了。
+通过this.setState方法触发的更新过程不会调用这个函数，这是这个函数适合根据新的props值（也就是参数nextProps）来计算出是不是要更新内部状态state。
+更新组件内部状态的方法是this.setState，如果this.setState的调用导致componentWillReceiveProps(nextProps)的再一次调用，那就是一个死循环了。
 
 26. shouldComponentUpdate(nextProps, nextState) {
     return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state),fromJS(nextState))
@@ -371,7 +379,9 @@ getDerivedStateFromProps用法 为什么你不需要 getDerivedStateFromProps
 https://www.jianshu.com/p/cafe8162b4a8
 
 
-PureComponent的原理  https://www.jianshu.com/p/ff993656a66b
+React.memo(函数式组件) 作用同 PureComponent
+PureComponent的原理  https://www.jianshu.com/p/ff993656a66b  浅比较：比较的是内存地址
+当父组件传递给子组件props不变时，子组件不会re-render,但是会执行componentWillReceiveProps
 关于pureComponent和React.memo的用法  https://www.jianshu.com/p/b3d07860b778
 
 子组件使用父组件传来的方法，方法中的this指的是父组件中的this
@@ -657,3 +667,77 @@ import 任意变量名
 通过export方式导出，在导入时要加{ }，export default则不需要
 
 import aa ,{a,b} from "./b"这种情况是b文件中既有export default 又有export  
+
+
+字符串转数字
+https://www.cnblogs.com/jiajialove/p/10998710.html
+
+
+react Hooks
+createContext的用法 contextType  Provider Consumer（生产消费模式）
+React的Context的使用方法简介
+https://www.cnblogs.com/littleSpill/p/11221538.html
+React的contextType的使用方法简介
+https://www.cnblogs.com/littleSpill/p/11221817.html
+
+在纯函数式组件中消费式使用Context  useContext用法
+https://blog.csdn.net/weixin_43676119/article/details/89150233
+
+useReducer和useContext之间的联系
+https://www.jianshu.com/p/eddb25cda5f0
+
+useReducer用法（与useState区别）
+https://www.jianshu.com/p/566f0d79ca7b
+
+useContext Hook 是如何工作的（以及与contextType的区别）
+https://segmentfault.com/a/1190000020111320?utm_source=tag-newest
+
+
+document.documentElement和document.body之间的区别：
+前者指的是html元素  后者指的是body元素
+
+
+scrollTop与scrollTo的区别？
+前者是属性，可以直接获取也可以赋值，后者是方法，如window.scrollTo(100,100)
+scrollTop = 100;
+什么元素有scrollTop ?
+只有有overflow:scroll的盒子才有scrollTop;一个固定高度的父盒子，其内部内容溢出滚动，这时候父盒子才有scrollTop
+如何判断是否滑动到底部?
+父盒子的
+clientHeight + scrollTop ==scrollHeight
+https://blog.csdn.net/zhaileilei1/article/details/102630048
+
+页面的大滚动条是谁的？
+document.documentElement ? document.body ?
+
+react 箭头函数  bind 与传参数  e的位置
+https://www.jianshu.com/p/a01bd72c1b53
+箭头函数 onClick={(e)=>{this.handleClick(22,e)}}
+bind  onClick={this.handleClick.bind(22)} 
+handleClick(num,e)
+onClick={this.handleClick.bind(22)} 这样会消耗性能，每次都会重新生成一个函数，可以在constructor构造函数中
+一次性bind;
+
+
+
+es6 类 Class
+静态方法中的this指的是类本身，而不是类的实例
+静态方法只能在其他静态方法中被调用，不能在实例方法中调用，子类可以继承父类的静态方法，在子类
+静态方法中通过super.父类静态方法 调用。
+https://blog.csdn.net/qdmoment/article/details/82496685
+https://www.jianshu.com/p/5585412b4575
+
+函数与函数式组件的区别？
+react hooks只能在函数式组件中使用，如果函数通过标签的形式引用就是函数式组件，如果通过()方式执行就是函数而不是函数式组件
+
+state既受自身组件控制又受prop的影响
+https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#common-bugs-when-using-derived-state
+
+
+在promise.then 以及setTimeout中，setState会变成同步的；setState不会合并，setState执行
+后，就会re-render，重新渲染完之后，才会继续执行setState下面的语句
+
+
+
+网站账号：
+简书：微信登录
