@@ -244,6 +244,13 @@ switch(type){
 22  原生oninput和 onchange作用一样，都是输入一改变就触发,onblur是失焦触发
 23 immutable 常用api  https://www.cnblogs.com/chris-oil/p/8492349.html
 24 react 引入多个类 https://blog.csdn.net/qq_36742720/article/details/85766757
+
+react生命周期执行顺序
+https://www.cnblogs.com/wfblog/p/11842622.html
+forceUpdate方法被调用时会依次执行哪些生命周期函数？
+componentWillUpdate render  componentDidUpdate
+
+
 25关于raect声明周期
 26.render什么时候执行，只要setState执行，无论值是否改变都会re-render,因为shouldComponentUpdate默认返回true
 子组件的componentWillReceiveProps在第一次渲染的时候不会执行，当父组件re-render的时候才会执行，先执行componentWillREceiveProps,
@@ -253,7 +260,8 @@ shouldComponentUpdate什么时候执行，1.自身组件setState的时候，2.�
 componentWillREceive什么时候执行，父组件re-render的时候才会执行
 
 28.为什么组件本身setState不会触发componentWillREcieveProps呢？
-通过this.setState方法触发的更新过程不会调用这个函数，这是这个函数适合根据新的props值（也就是参数nextProps）来计算出是不是要更新内部状态state。更新组件内部状态的方法是this.setState，如果this.setState的调用导致componentWillReceiveProps(nextProps)的再一次调用，那就是一个死循环了。
+通过this.setState方法触发的更新过程不会调用这个函数，这是这个函数适合根据新的props值（也就是参数nextProps）来计算出是不是要更新内部状态state。
+更新组件内部状态的方法是this.setState，如果this.setState的调用导致componentWillReceiveProps(nextProps)的再一次调用，那就是一个死循环了。
 
 26. shouldComponentUpdate(nextProps, nextState) {
     return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state),fromJS(nextState))
@@ -380,6 +388,9 @@ PureComponent的原理  https://www.jianshu.com/p/ff993656a66b 用的是浅比�
 
 
 
+React.memo(函数式组件) 作用同 PureComponent
+PureComponent的原理  https://www.jianshu.com/p/ff993656a66b  浅比较：比较的是内存地址
+当父组件传递给子组件props不变时，子组件不会re-render,但是会执行componentWillReceiveProps
 关于pureComponent和React.memo的用法  https://www.jianshu.com/p/b3d07860b778
 
 子组件使用父组件传来的方法，方法中的this指的是父组件中的this
@@ -687,6 +698,106 @@ import 任意变量名
 import aa ,{a,b} from "./b"这种情况是b文件中既有export default 又有export  
 
 
+字符串转数字
+https://www.cnblogs.com/jiajialove/p/10998710.html
+
+
+react Hooks
+createContext的用法 contextType  Provider Consumer（生产消费模式）
+React的Context的使用方法简介
+https://www.cnblogs.com/littleSpill/p/11221538.html
+React的contextType的使用方法简介
+https://www.cnblogs.com/littleSpill/p/11221817.html
+
+在纯函数式组件中消费式使用Context  useContext用法
+https://blog.csdn.net/weixin_43676119/article/details/89150233
+
+useReducer和useContext之间的联系
+https://www.jianshu.com/p/eddb25cda5f0
+
+useReducer用法（与useState区别）
+https://www.jianshu.com/p/566f0d79ca7b
+
+useContext Hook 是如何工作的（以及与contextType的区别）
+https://segmentfault.com/a/1190000020111320?utm_source=tag-newest
+
+
+document.documentElement和document.body之间的区别：
+前者指的是html元素  后者指的是body元素
+
+
+scrollTop与scrollTo的区别？
+前者是属性，可以直接获取也可以赋值，后者是方法，如window.scrollTo(100,100)
+scrollTop = 100;
+什么元素有scrollTop ?
+只有有overflow:scroll的盒子才有scrollTop;一个固定高度的父盒子，其内部内容溢出滚动，这时候父盒子才有scrollTop
+如何判断是否滑动到底部?
+父盒子的
+clientHeight + scrollTop ==scrollHeight
+https://blog.csdn.net/zhaileilei1/article/details/102630048
+
+页面的大滚动条是谁的？
+document.documentElement ? document.body ?
+
+react 箭头函数  bind 与传参数  e的位置
+https://www.jianshu.com/p/a01bd72c1b53
+箭头函数 onClick={(e)=>{this.handleClick(22,e)}}
+bind  onClick={this.handleClick.bind(22)} 
+handleClick(num,e)
+onClick={this.handleClick.bind(22)} 这样会消耗性能，每次都会重新生成一个函数，可以在constructor构造函数中
+一次性bind;
+
+
+
+es6 类 Class
+静态方法中的this指的是类本身，而不是类的实例
+静态方法只能在其他静态方法中被调用，不能在实例方法中调用，子类可以继承父类的静态方法，在子类
+静态方法中通过super.父类静态方法 调用。
+https://blog.csdn.net/qdmoment/article/details/82496685
+https://www.jianshu.com/p/5585412b4575
+
+函数与函数式组件的区别？
+react hooks只能在函数式组件中使用，如果函数通过标签的形式引用就是函数式组件，如果通过()方式执行就是函数而不是函数式组件
+
+state既受自身组件控制又受prop的影响
+https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#common-bugs-when-using-derived-state
+
+
+在promise.then 以及setTimeout中，setState会变成同步的；setState不会合并，setState执行
+后，就会re-render，重新渲染完之后，才会继续执行setState下面的语句
+
+
+节流和防抖（都是在事件连续触发时的处理方案）
+节流 throttle：每隔一段时间执行一次 （火车上人上厕所，有人 无人是个标识，每隔20分钟一个人上完厕所下一个人才能上）
+防抖 debounce :只执行最后一次  （假设timer是20分钟，一个人进去上厕所，如果20分钟内没敲门，20分钟完这个人就可以上厕所，如果20分钟内有人
+敲门，那么这个人就得出来换下一个人继续等待20分钟。）
+https://segmentfault.com/a/1190000018428170?utm_source=tag-newest
+
+
+闭包的理解：
+就是闭包的本质就是函数嵌套，就是在函数里面定义函数，
+内部函数可以引用外部函数的参数和变量
+参数和变量不会被垃圾回收机制给回收
+如果在全局环境定义的变量，就会污染全局环境，因此可以利用闭包的特性来模仿块级作用域
+如节流函数 防抖函数  debounce 传入一个函数参数再返回一个函数。
+闭包某种程度上就是函数的内部函数，可以引用外部函数的局部变量。当外部函数退出后，如果内部函数依旧能被访问到，那么内部函数所引用的外部函数的局部变量就也没有消失，该局部变量的生存周期就被延续。
+
+
+高阶函数：
+　--高阶函数形成条件：
+1.函数作为参数传递  
+如数组方法 map reduce filter 封装ajax异步请求，函数参数为请求回来之后要做的事情 等  
+2.函数作为返回值返回  debounce  闭包，外部函数包裹内部函数，内部函数可以使用外部函数中的环境变量，不至于造成全局污染
+
+call bind apply 柯理化函数
+https://github.com/lin-xin/blog/issues/7
+
+
+
+yarn upgrade 指的是升级到指定范围的版本
+
+网站账号：
+简书：微信登录
 package.json和package-lock.json和yarn.lock的作用
 https://www.jianshu.com/p/5ecdce174a97
 https://www.jianshu.com/p/9ae748598f1a
