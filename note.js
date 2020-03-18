@@ -375,7 +375,11 @@ getDerivedStateFromProps用法 为什么你不需要 getDerivedStateFromProps
 https://www.jianshu.com/p/cafe8162b4a8
 
 
-PureComponent的原理  https://www.jianshu.com/p/ff993656a66b
+
+PureComponent的原理  https://www.jianshu.com/p/ff993656a66b 用的是浅比较，为什么不用深比较呢？https://www.jianshu.com/p/0d0587fc33de
+
+
+
 关于pureComponent和React.memo的用法  https://www.jianshu.com/p/b3d07860b778
 
 子组件使用父组件传来的方法，方法中的this指的是父组件中的this
@@ -686,3 +690,60 @@ import aa ,{a,b} from "./b"这种情况是b文件中既有export default 又有e
 package.json和package-lock.json和yarn.lock的作用
 https://www.jianshu.com/p/5ecdce174a97
 https://www.jianshu.com/p/9ae748598f1a
+
+
+
+3.3
+
+绝对定位下 bottom和top同时设置，top生效 ,auto
+
+wrapClassname .ant-modal-wrap 
+style和className  .ant-modal
+
+
+
+
+git rebase
+
+clearTimeout(timer)和timer=null有没有区别呢?
+clearTimeout(timer)清除了timer指向的定时器，timer=null，是修改timer的指向，是timer这个变量不指向某个定时器，然而并没有清除这个定时器，定时器依旧可以使用
+
+深比较与浅比较
+
+function shallowEqual(objA: mixed, objB: mixed): boolean {
+    if (Object.is(objA, objB)) {
+      return true;
+    }
+  
+    if (
+      typeof objA !== 'object' ||
+      objA === null ||
+      typeof objB !== 'object' ||
+      objB === null
+    ) {
+      return false;
+    }
+  
+    const keysA = Object.keys(objA);
+    const keysB = Object.keys(objB);
+  
+    if (keysA.length !== keysB.length) {
+      return false;
+    }
+  
+    // Test for A's keys different from B.
+    for (let i = 0; i < keysA.length; i++) {
+      if (
+        !({}).hasOwnProperty.call(objB, keysA[i]) ||
+        !Object.is(objA[keysA[i]], objB[keysA[i]])
+      ) {
+        return false;
+      }
+    }
+  
+    return true;
+  }
+
+如何实现深拷贝
+https://segmentfault.com/a/1190000018371840
+https://segmentfault.com/a/1190000019149799
