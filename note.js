@@ -791,6 +791,17 @@ https://github.com/lin-xin/blog/issues/7
 
 yarn upgrade 指的是升级到指定范围的版本
 
+@修饰器 
+https://blog.csdn.net/u014328357/article/details/73606794
+
+克隆组件 React.cloneElement(dom,{属性},子元素)
+一个组件的名称就是 class Index 的名称就是Index
+react 性能优化 useCallback useMemo用法
+ https://mp.weixin.qq.com/s/iccGk8MzCGA8Bs-t9TdDwA
+ https://jancat.github.io/post/2019/translation-usememo-and-usecallback/
+
+
+
 网站账号：
 简书：微信登录
 package.json和package-lock.json和yarn.lock的作用
