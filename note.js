@@ -858,3 +858,17 @@ function shallowEqual(objA: mixed, objB: mixed): boolean {
 如何实现深拷贝
 https://segmentfault.com/a/1190000018371840
 https://segmentfault.com/a/1190000019149799
+\
+
+React key
+输入框每输入一下就失焦？
+1.输入框所在的组件每次输入都会重新销毁创建，比如把子组件写在父组件的render里面导致每次父组件render的时候子组件都会重新定义
+2.key 
+
+设置请求超时3000ms  超过之后再调接口就没反应了 
+
+登录实现
+
+input autoComplete为“new-password” 不自动填充 没有就是可以自动填充
+
+
