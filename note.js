@@ -699,6 +699,35 @@ import 任意变量名
 
 import aa ,{a,b} from "./b"这种情况是b文件中既有export default 又有export  
 
+export form用法
+https://stackoverflow.com/questions/41139740/how-to-re-export-another-modules-default-export?noredirect=1&lq=1
+https://stackoverflow.com/questions/41139740/how-to-re-export-another-modules-default-export?noredirect=1&lq=1
+https://github.com/tc39/proposal-export-ns-from
+import {FooAction, BarAction} from './action_creators/index.js'
+export {FooAction, BarAction} from './action_creators/index.js'
+export * from './action_creators/index.js';
+
+const foo = {
+  a: 'b'
+};
+export default foo;
+export { default as foo } from './foo';
+引入  import {foo} from 
+
+
+import AAA from './aaa'
+import BBB from './bbb'
+export {AAA,BBB}
+
+
+import AAA from './aaa'
+import BBB from './bbb'
+export {AAA}
+export {BBB}
+
+export { default as AAA } from './aaa'
+export { default as BBB } from './bbb'
+
 
 字符串转数字
 https://www.cnblogs.com/jiajialove/p/10998710.html
@@ -997,6 +1026,8 @@ CSS文件代码中运用@import引入此外一个CSS文件
  深层选择器  /deep/ 或者>>>
  有何用？修改element-ui自带的样式，比如el-button可以直接加class修改样式，但是如果要改变el-button下面的span的样式就要用/deep/
   
+v-module.number  在input中把字符串转化为数字（只能是整数）判断是否是整数  Number.isInteger
+$set用法  https://blog.csdn.net/weixin_39907729/article/details/93213244
 
  Cannot assign to read only property 'exports' of object
 
@@ -1007,8 +1038,26 @@ CSS文件代码中运用@import引入此外一个CSS文件
 
     npm install babel-plugin-transform-es2015-modules-commonjs
 
+this.$xxx和Vue.prototype.$xxx
+https://zhuanlan.zhihu.com/p/71243052
+
+
+
+关于exports module.exports import export 混用
+require: node 和 es6 都支持的引入
+export / import : 只有es6 支持的导出引入
+module.exports / exports: 只有 node 支持的导出
+
+
 然后在 babelrc文件中配置
 
 { “plugins”: [“transform-es2015-modules-commonjs”] }
 
+
+tree Shaking
+https://segmentfault.com/a/1190000012794598
+
+
+前端获取二进制流下载文件并解决无法获header问题
+https://www.jianshu.com/p/d0abe22a7157
 
