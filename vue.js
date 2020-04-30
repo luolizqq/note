@@ -32,3 +32,32 @@ export default {
 router.js 
 路由上的name有啥用   跳转的时候会用到，:to='{name:}'
 vue组件上的name有啥用  keep-alive的include会用到
+
+style scoped  元素上生成data-v-xxx属性  
+https://segmentfault.com/q/1010000009421651
+
+
+vue 样式  https://blog.csdn.net/weixin_33827590/article/details/91404480
+1.css-module 
+<style module lang="less">
+.handle-box {
+    margin-bottom: 20px;
+}
+.bread{
+    //修改elementUI默认样式
+    :global{
+        .el-breadcrumb__inner{
+        cursor: pointer !important;
+        }
+    }
+}
+</style>
+vue 之 css module的使用方法   https://www.jb51.net/article/151948.htm
+//在元素上用:class='$style.bread'
+2.scoped
+修改elementUI默认样式
+>>>或者/deep/深度选择器
+原因style上加上scoped之后表明样式只对改组件起作用，要控制子组件下面的元素，就要在子组件上例如bread类，.bread >>> ,而bread这种自定义类一般是加在elm组件上的
+
+
+vue-cli (vue-cli 2.x )和@vue/cli(vue-cli 3.x )
