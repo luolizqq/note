@@ -79,6 +79,21 @@ class ForwardRef extends Component {
 export default ForwardRef;
 
 
+hooks
+useEffect和useLayoutEffect的区别
+https://www.jianshu.com/p/412c874c5add
 
+6个hooks用法 https://segmentfault.com/a/1190000018950566
+https://blog.csdn.net/sinat_17775997/article/details/94453167
 
-
+useRef用法
+useRef返回一个普通 JS 对象，可以将任意数据存到current属性里面，就像使用实例化对象的this一样。另外一个使用场景是获取 previous props 或 previous state：
+function Counter() {
+  const [count, setCount] = useState(0);
+  const prevCountRef = useRef();
+  useEffect(() => {
+    prevCountRef.current = count;
+  });
+  const prevCount = prevCountRef.current;
+  return <h1>Now: {count}, before: {prevCount}</h1>;
+}
