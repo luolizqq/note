@@ -7,6 +7,8 @@ import { auto } from "async"
 import { render } from "react-dom"
 import { PureComponent } from "react"
 import { isAbsolute } from "upath";
+import { registerQuotaErrorCallback } from "workbox-core"
+import { nonNegativeInteger } from "airbnb-prop-types"
 
 https://blog.csdn.net/yangbingbinga/article/details/61417689  require.ensure  按需加载  防止js文件过大
 
@@ -705,6 +707,35 @@ import 任意变量名
 
 import aa ,{a,b} from "./b"这种情况是b文件中既有export default 又有export  
 
+export form用法
+https://stackoverflow.com/questions/41139740/how-to-re-export-another-modules-default-export?noredirect=1&lq=1
+https://stackoverflow.com/questions/41139740/how-to-re-export-another-modules-default-export?noredirect=1&lq=1
+https://github.com/tc39/proposal-export-ns-from
+import {FooAction, BarAction} from './action_creators/index.js'
+export {FooAction, BarAction} from './action_creators/index.js'
+export * from './action_creators/index.js';
+
+const foo = {
+  a: 'b'
+};
+export default foo;
+export { default as foo } from './foo';
+引入  import {foo} from 
+
+
+import AAA from './aaa'
+import BBB from './bbb'
+export {AAA,BBB}
+
+
+import AAA from './aaa'
+import BBB from './bbb'
+export {AAA}
+export {BBB}
+
+export { default as AAA } from './aaa'
+export { default as BBB } from './bbb'
+
 
 
 字符串转数字
@@ -896,3 +927,175 @@ useEffect用法  https://zhuanlan.zhihu.com/p/65773322
 登录用户名密码以及其他输入框不自动填充  autoComplete="new-password"
 
 chrome浏览器[Chrome开发者工具]使用教程之Elements(元素面板)  https://www.kkpan.com/article/1845.html
+\
+
+React key
+输入框每输入一下就失焦？
+1.输入框所在的组件每次输入都会重新销毁创建，比如把子组件写在父组件的render里面导致每次父组件render的时候子组件都会重新定义
+2.key 
+
+设置请求超时3000ms  超过之后再调接口就没反应了 
+
+登录实现
+
+input autoComplete为“new-password” 不自动填充 没有就是可以自动填充
+
+
+
+css  cursor属性   https://www.jianshu.com/p/b28c3f53163b
+pointer-events详解  http://www.imooc.com/article/48022 
+如何利用pointer-events属性实现a标签的禁用   a[disabled]{color:(0,0,0,0.25);pointer-events:none;}
+none——元素不再是鼠标事件的目标，鼠标不再监听当前层而去监听下面的层中的元素。
+
+Element.style和inherited from之间的区别？
+inherited from 应该是继承的父级样式吧。
+Element.style 是内联样式 和 内部 和 外部 以及通过js设置的样式吧。
+
+application/x-www-urlencoded 与application/json的区别
+https://www.cnblogs.com/honghong87/p/9888442.html
+举例. 向服务器发送数据 {a:"a", b:"b"}
+如果头的格式是application/x-www-form-urlencoded,  则ajax.send("a='a'&b='b'");
+如果头的格式是application/json, 则ajax.send(JSON.stringify(data));
+
+application/x-www-urlencoded 与 multipult/form-data的区别
+https://www.cnblogs.com/kaibin/p/6635134.html
+在Form元素的语法中，EncType表明提交数据的格式 用 Enctype 属性指定将数据回发到服务器时浏览器使用的编码类型。 
+例如： application/x-www-form-urlencoded： 窗体数据被编码为名称/值对。这是标准的编码格式。
+ multipart/form-data： 窗体数据被编码为一条消息，页上的每个控件对应消息中的一个部分，这个一般文件上传时用
+ 如果没有type=file的控件，用默认的application/x-www-form-urlencoded就可以了
+  
+ blob文件和file（文件上传获取的）的区别
+ Blob的全称是binary large object，表示二进制大对象，并不是前端的特有对象，而是计算机界的通用术语，MySql/Oracle数据库中，就有一种Blob类型，专门存放二进制数据。
+ file根据名字很容易理解，就是纯粹的文件。通常，表示我们使用<input type="file">选择的FileList对象，或者是使用拖拽操作搞出的DataTransfer对象。
+ file对象也是二进制对象，从属于Blob；也就是说file是Blob里的一个小类，Blob的属性和方法都可以用于file，而file自己也有自己特有的属性和方法。对于Blob和file都有的属性，推荐使用Blob的属性
+
+request  headers参数
+ https://www.cnblogs.com/yanggb/p/11684494.html
+
+ ajax 上传进度条
+ https://blog.csdn.net/weixin_41646716/article/details/90058189
+
+ 浏览器下载window.location.href 就是a标签下载 设置href(Data Url)和downLoad(fileName)属性点击
+ 坑
+ export function downLoadByUrl(url){
+  var xhr = new XMLHttpRequest();
+  //GET请求,请求路径url,async(是否异步)
+  xhr.open('GET', url, true);
+  xhr.setRequestHeader('token',  localStorage.getItem("token") || '')
+  xhr.setRequestHeader('userId',  localStorage.getItem("userId") || '')
+  //设置请求头参数的方式,如果没有可忽略此行代码
+  // xhr.setRequestHeader("token", token);
+  //设置响应类型为 blob
+  xhr.responseType = 'blob';
+  //关键部分
+  xhr.onload = function (e) {
+     
+      //如果请求执行成功
+      if (xhr.status == 200 && xhr.readyState === 4) {
+          // var blob =xhr.response
+          // var a = document.createElement('a');
+          // // blob.type = "application/octet-stream";
+          // //创键临时url对象
+          // var url = URL.createObjectURL(blob);
+          // a.href = url;
+          // a.click();
+          // //释放之前创建的URL对象
+          // window.URL.revokeObjectURL(url);
+               var blob = this.response;
+               var reader = new FileReader();
+               reader.readAsDataURL(blob);    // 转换为base64
+               console.log("请求头",xhr.getAllResponseHeaders())
+               reader.onload = (e)=>{   
+                  if(xhr.getResponseHeader('content-disposition')){
+                      fileName = xhr.getResponseHeader('content-disposition').split(";")[1].split("=")[1];
+                  }else{
+                      console.log('下载用例出错！');
+                      return;
+                  }
+                  var a = document.createElement('a');
+                  var url = URL.createObjectURL(e.target.response);
+                  a.href = url;
+                  a.download=filename;
+                  a.click();
+                  //释放之前创建的URL对象
+                  window.URL.revokeObjectURL(url);
+               } 
+      }
+  };
+  //发送请求
+  xhr.send();
+}
+ https://scarletsky.github.io/2016/07/03/download-file-using-javascript/
+ FileReader的用法 https://blog.csdn.net/xianweizuo/article/details/88911364\
+
+
+卸载
+npm uninstall vue-cli -g
+yarn global remove vue-cli
+安装
+npm install -g @vue/cli
+# OR
+yarn global add @vue/cli
+
+@import 的用法   http://www.divcss5.com/jiqiao/j53086.shtml
+<style>
+@import url(images/style.css);
+</style>
+CSS文件代码中运用@import引入此外一个CSS文件
+
+
+
+ vue
+
+ component：(resolve) => require是什么意思？
+ 懒加载 https://www.jianshu.com/p/487a600824af
+ 
+ $set用法
+ this.obj= Object.assign({}, this.obj, { a: 1, e: 2 })
+ this.$set(this.obj,'e',02)
+ Vue.set(vm.obj, 'e', 0)
+ https://www.jianshu.com/p/71b1807b1815
+
+ /sync的用法
+ https://blog.csdn.net/qq_40285497/article/details/90637335
+ vue后台整套解决方案
+ https://panjiachen.gitee.io/vue-element-admin-site/
+
+ 深层选择器  /deep/ 或者>>>
+ 有何用？修改element-ui自带的样式，比如el-button可以直接加class修改样式，但是如果要改变el-button下面的span的样式就要用/deep/
+  
+v-module.number  在input中把字符串转化为数字（只能是整数）判断是否是整数  Number.isInteger
+$set用法  https://blog.csdn.net/weixin_39907729/article/details/93213244
+
+ Cannot assign to read only property 'exports' of object
+
+ 原因 ：在webpack打包的时候，可以在js文件中混用require和export。但是不能混用import 以及module.exports。
+
+ 因为webpack 2中不允许混用import和module.exports,
+ 执行npm：
+
+    npm install babel-plugin-transform-es2015-modules-commonjs
+
+this.$xxx和Vue.prototype.$xxx
+https://zhuanlan.zhihu.com/p/71243052
+
+
+
+关于exports module.exports import export 混用
+require: node 和 es6 都支持的引入
+export / import : 只有es6 支持的导出引入
+module.exports / exports: 只有 node 支持的导出
+
+
+然后在 babelrc文件中配置
+
+{ “plugins”: [“transform-es2015-modules-commonjs”] }
+
+
+tree Shaking
+https://segmentfault.com/a/1190000012794598
+
+
+前端获取二进制流下载文件并解决无法获header问题
+https://www.jianshu.com/p/d0abe22a7157
+
