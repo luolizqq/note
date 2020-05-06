@@ -187,7 +187,9 @@ vue 动态加载组件 component: (r) =>require.ensure([],()=>r(require('@/App')
 
 react 
 1.非页面级组件  this.props.history.push不可用   用@withRouter 包裹组件 （from 'react-router-dom'）  
-2.函数级组件  useRouteMatch,useParams 获取match params等（from 'react-router-dom'） 
+2.函数级组件  useRouteMatch,useParams,useLocation,useHistory 获取match params等（from 'react-router-dom'） 
+用法 https://blog.csdn.net/weixin_43870742/article/details/102966040  useLocation useParams useHistory
+history上有一个监听location改变的方法  history.listen(function(location){})
 3.react嵌套路由  在a页面<Switch></Switch>包裹子Route  path是完整路径 ${this.props.match.url}/:id
 4.跳转 Link或者NavLink（from 'react-router-dom'）
 5.react-router-dom网站 https://reacttraining.com/react-router/web/guides/quick-start
@@ -196,8 +198,12 @@ react
 8.yarn add *** --dev  
 
 9.flex 总结 https://www.jianshu.com/p/24a655116f30
+https://blog.csdn.net/b954960630/article/details/83034971
 
 10一篇文章让你搞懂git pull 和git pull --rebase的区别  https://www.cnblogs.com/chenyablog/p/10308058.html
+工作区 暂存区  版本区之间的区别 以及如何比较他们之间的不同https://www.jianshu.com/p/e6e42b0d4382
+git  add . 提交改动从工作区到暂存区 git commit 提交改动从暂存区区到版本区
+git checkout .放弃当前所有修改   git reset HEAD 把提交到暂存区的改动拉回到工作区
 
 11 font:italic bold 12px/30px Georgia, serif;
 12 对于css（less,sass）文件所在目录可以配置alias简写 引入的时候 在css文件中引入 @import 前面要加~  但是在js文件引入还是用import不需要加~
@@ -621,6 +627,7 @@ scrollTop:元素向上滚动的高度
 https://www.kmbox.cn/html/help/362.html
 react 由A页面携带state跳转到B页面，刷新b页面，this.props.location.state不变，并且
 history的长度也不变,state内部存的东西存储在window.history中。（hashHistory会刷新？当hash值改变的时候，history的长度会加1，state也会清空）
+为啥location.state中没东西？ 从其他页面带state活着query到这个页面才会有，如果刷新当前页面的话肯定没值了
 react  browserHistory的原理：
 React Router 是建立在 history 之上的。
 简而言之，一个 history 知道如何去监听浏览器地址栏的变化，
@@ -679,8 +686,9 @@ export t;
 
 
 在引入的时候：
-import * as all;用的时候all.a
+import * as all;用的时候all.a   
 import {a,b} from 
+不能直接 import 变量名 from "***"
 
 import default 的用法：
 var a=1;
@@ -696,6 +704,7 @@ import 任意变量名
 通过export方式导出，在导入时要加{ }，export default则不需要
 
 import aa ,{a,b} from "./b"这种情况是b文件中既有export default 又有export  
+
 
 
 字符串转数字
@@ -869,3 +878,21 @@ function shallowEqual(objA: mixed, objB: mixed): boolean {
 如何实现深拷贝
 https://segmentfault.com/a/1190000018371840
 https://segmentfault.com/a/1190000019149799
+
+数组扁平化：https://www.jb51.net/article/179337.htm
+
+Array.From的用法 https://blog.csdn.net/weixin_34000916/article/details/91435435
+
+antd Form 设置layout:inline不能和Col一起设置不会冲突，两者区别，前者也是行内不过就像display：inline一样，多了就会掉下来
+后者会前者设置每一个表单项占多少份，只要不超过24就不会掉下来
+
+yield只能在生成器函数中使用也就是*的函数，[].forEach(()=>{不能在这里使用yield})
+
+
+子元素高度 宽度设置百分比的时候生效的前提是父元素有高度有宽度
+
+useEffect用法  https://zhuanlan.zhihu.com/p/65773322
+
+登录用户名密码以及其他输入框不自动填充  autoComplete="new-password"
+
+chrome浏览器[Chrome开发者工具]使用教程之Elements(元素面板)  https://www.kkpan.com/article/1845.html
