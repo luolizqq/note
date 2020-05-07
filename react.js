@@ -97,3 +97,44 @@ function Counter() {
   const prevCount = prevCountRef.current;
   return <h1>Now: {count}, before: {prevCount}</h1>;
 }
+
+useMemo https://segmentfault.com/a/1190000018697490  所以我们可以使用useMemo方法 避免无用方法的调用  https://www.jianshu.com/p/014ee0ebe959
+useMemo和useCallback的参数一样都是回调函数和依赖的变量，当依赖的变量改变时，回调才会执行。
+useMemo返回的是回调函数执行的值，useCallback返回一个函数
+useMemo
+function Button({ name, children }) {
+  function changeName(name) {
+    console.log('11')
+    return name + '改变name的方法'
+  }
+
+const otherName =  useMemo(()=>changeName(name),[name])
+  return (
+      <>
+        <div>{otherName}</div>
+        <div>{children}</div>
+      </>
+
+  )
+}
+
+export default Button
+
+
+
+useCallback(fn,[]) 
+import React, { useCallback } from 'react'
+
+function ParentComp () {
+  // ...
+  const [ name, setName ] = useState('hi~')
+  // 每次父组件渲染，返回的是同一个函数引用
+  const changeName = useCallback((newName) => setName(newName), [])  
+
+  return (
+    <div>
+      <button onClick={increment}>点击次数：{count}</button>
+      <ChildComp name={name} onClick={changeName}/>
+    </div>
+  );
+}
