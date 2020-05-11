@@ -10,3 +10,9 @@ https://www.jianshu.com/p/d16565c6b6ee
 
 原型链
 https://blog.csdn.net/yucihent/article/details/79424506
+
+什么是JSON标准格式
+'{"name":"zqq"}'  
+'{"name":{"aa":["1","2"]}}'
+JSON.parse的参数只能是JSON标准格式，不然就会报错
+  

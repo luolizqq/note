@@ -138,3 +138,54 @@ function ParentComp () {
     </div>
   );
 }
+
+
+让本页面局部刷新：
+先跳转到一个空页面，空页面comoponentWillMount再跳转到本页面。（在index页面push("/index")没有效果）
+
+
+导出
+
+export function download(url,data,callback){
+  const search = qs.stringify(data, { addQueryPrefix: true });
+  url = ENV_API + url + search 
+  var xhr = new XMLHttpRequest();
+  //GET请求,请求路径url,async(是否异步)
+  xhr.open('GET', url, true);
+  xhr.setRequestHeader('token',  localStorage.getItem("token") || '')
+  xhr.setRequestHeader('userId',  localStorage.getItem("userId") || '')
+  //设置请求头参数的方式,如果没有可忽略此行代码
+  // xhr.setRequestHeader("token", token);
+  //设置响应类型为 blob
+  xhr.responseType = 'blob';
+  //关键部分
+  xhr.onload = function (e) {
+      //如果请求执行成功
+      if (xhr.readyState ==4 && xhr.status == 200) {
+          callback && callback();
+          var blob = this.response;
+          var reader = new FileReader()
+          reader.onload = e => {
+            try{
+              const data = JSON.parse(e.target.result);
+              if(data.data.retCode ==="1"){
+                message.error(data.data.detMessage);
+              }
+            }catch(err){
+              var filename = xhr.getResponseHeader('content-disposition').split(";")[1].split("=")[1];
+              var a = document.createElement('a');
+              //创键临时url对象
+              var url = URL.createObjectURL(blob);
+              a.href = url;
+              a.download=filename;
+              a.click();
+              //释放之前创建的URL对象
+              window.URL.revokeObjectURL(url);
+            }
+          }
+          reader.readAsText(blob);
+      }
+  };
+  //发送请求
+  xhr.send();
+}
