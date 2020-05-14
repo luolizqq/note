@@ -189,3 +189,35 @@ export function download(url,data,callback){
   //发送请求
   xhr.send();
 }
+
+React.CloneElment用法  https://www.jianshu.com/p/2ccf0cd14388
+
+<div className="code" onClick={(e)=>{console.log("e",e.target.matches("div"))}}>啊啊啊啊啊啊</div>
+
+获取dom
+div ref获取
+组件  findDomNode(ref)
+React.findDomNode的用法  https://blog.csdn.net/margin_0px/article/details/81331159
+
+
+react 事件处理机制  https://www.cnblogs.com/mengff/p/9631919.html
+
+constructor(props){
+  super(props)
+} 为什么要在构造函数内使用super(props)
+https://www.cnblogs.com/chenyablog/p/12251414.html
+
+改造getFieldDecorator
+if (this.props.disabled) {
+  getFieldDecorator = (...rest) => {
+      return element => {
+          let NewElement = React.cloneElement(element, {
+              disabled: true,
+              allowClear: false
+          });
+          return this.props.form.getFieldDecorator(...rest)(NewElement);
+      };
+  };
+}
+
+高阶组件  https://blog.csdn.net/sinat_17775997/article/details/100761756

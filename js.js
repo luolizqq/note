@@ -16,3 +16,9 @@ https://blog.csdn.net/yucihent/article/details/79424506
 '{"name":{"aa":["1","2"]}}'
 JSON.parse的参数只能是JSON标准格式，不然就会报错
   
+
+我们可以用Number.isInteger()来判断一个数字是否为整数. NaN === NaN //false
+
+
+useRef  useImperativeHandle 的用法
+https://www.cnblogs.com/yky-iris/p/12355243.html
