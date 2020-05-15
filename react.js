@@ -98,6 +98,7 @@ function Counter() {
   return <h1>Now: {count}, before: {prevCount}</h1>;
 }
 
+useMemo和useCallback的区别
 useMemo https://segmentfault.com/a/1190000018697490  所以我们可以使用useMemo方法 避免无用方法的调用  https://www.jianshu.com/p/014ee0ebe959
 useMemo和useCallback的参数一样都是回调函数和依赖的变量，当依赖的变量改变时，回调才会执行。
 useMemo返回的是回调函数执行的值，useCallback返回一个函数
@@ -139,6 +140,14 @@ function ParentComp () {
   );
 }
 
+useMemo 和 useCallback 接收的参数都是一样,第一个参数为回调 第二个参数为要依赖的数据
+
+共同作用：
+1.仅仅 依赖数据 发生变化, 才会重新计算结果，也就是起到缓存的作用。
+
+两者区别：
+1.useMemo 计算结果是 return 回来的值, 主要用于 缓存计算结果的值 ，应用场景如： 需要 计算的状态
+2.useCallback 计算结果是 函数, 主要用于 缓存函数，应用场景如: 需要缓存的函数，因为函数式组件每次任何一个 state 的变化 整个组件 都会被重新刷新，一些函数是没有必要被重新刷新的，此时就应该缓存起来，提高性能，和减少资源浪费。
 
 让本页面局部刷新：
 先跳转到一个空页面，空页面comoponentWillMount再跳转到本页面。（在index页面push("/index")没有效果）
@@ -221,3 +230,25 @@ if (this.props.disabled) {
 }
 
 高阶组件  https://blog.csdn.net/sinat_17775997/article/details/100761756
+
+redux 原理
+https://www.jianshu.com/p/f6c5434c6e2d
+
+react 输入框输入中文问题
+https://www.cnblogs.com/yky-iris/p/9148151.html
+
+函数式组件上使用ref获取的是null,所以要使用useImperativeHandle自定义子组件向父组件暴露的属性
+React函数式组件使用Ref（forwardRef，useImperativeHandle）
+https://www.cnblogs.com/yky-iris/p/12355243.html
+Warning: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
+父组件如果想要在函数式子组件上使用ref, 结果是null，所以就要自定义子组件向父组件暴露的属性，需要用到forwardRef，useImperativeHandle
+ref={(node)=>{}} ref回调什么时候会执行？
+对于class类组件而言，是在挂载完毕或者卸载的时候（null）
+对于无状态的函数式组件，由于使用useImperativeHandle自定义了子组件向父组件暴露的属性，所以在暴露的属性改变的时候会引发ref回调重新执行。
+const inputEl = useCallback(node => {
+  console.log("node", node);
+  if (node !== null) {
+    setValue(node.value);
+  }
+}, []);
+这种形式只在加载完了生成一个函数
