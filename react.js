@@ -252,3 +252,35 @@ const inputEl = useCallback(node => {
   }
 }, []);
 这种形式只在加载完了生成一个函数
+
+
+// models > app.js
+import { routerRedux } from 'dva/router';
+*login({ payload }, { call, put }) {
+  const response = yield call(login, payload);//1.登录
+  yield put({
+    type: 'changeLoginStatus',
+    payload: response,
+  }); // Login successfully
+
+  if (response.data.retCode === "0") {
+    const data = convertResponse(response);
+    localStorage.setItem("isLogin", true)
+    localStorage.setItem("token", data.token)
+    localStorage.setItem("userId", data.userId)
+    localStorage.setItem("userInfo", JSON.stringify(data));
+    yield put({type:"global/init"})
+    yield put({
+      type: 'getMenuList',
+      payload: { "data": { "inData": {} } },
+    });//2.获取菜单列表
+    yield put(routerRedux.push("/"))  //3.跳转到首页（当跳转到首页的时候,菜单已经获取到了，不用担心菜单渲染时拿不到数据）
+  } else {
+    message.error(response.data.retMessage);
+  }
+},
+generator用法  https://zhuanlan.zhihu.com/p/36699390  （相当于async,await,）
+function *g(){}
+const g = *g(); //不会执行
+g.next(); //改阶段执行，结束时，在函数内触发g.next();让下一阶段执行，这样就不用手动执行g.next();
+g.next();
