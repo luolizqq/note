@@ -108,11 +108,43 @@ async函数(timeout)的调用，确实返回promise 对象，并且Promise 还�
 就会调用Promise.reject() 返回一个promise 对象，那么要想获取到async 函数的执行结果，就要调用promise的then 或catch 来给它注册回调函数，
 
 globs  文件路径匹配规则  https://blog.csdn.net/thunderevil35/article/details/80951803
-path-to-regExp https://wudi98.blog.csdn.net/article/details/98475142
-exec  match用法   https://www.cnblogs.com/heshan1992/p/6259171.html
+path-to-regExp https://wudi98.blog.csdn.net/article/details/98475142 
+exec  match用法   https://www.cnblogs.com/heshan1992/p/6259171.html   如果没有g全局标志,那么返回的数组arr.arr[0]保存的是完整的匹配.arr[1]保存的是第一个括号里捕获的字串,依此类推arr[n]保存的是第n个括号捕获的内容.也就是当包含有全局的标志时则返回的结果第一个是正确匹配的结果，后面依次是子匹配的结果。
 search 返回索引  test （正则是否符合字符串）
 search和indexOf的区别：search的参数可以为正则表达式  
 var str="hello World";
 console.log(str.search(/World/)); ====>6
 console.log(str.search(/world/)); ====>-1
 console.log(str.search(/world/i); ====>6
+
+
+
+generator用法  https://zhuanlan.zhihu.com/p/36699390  （相当于async,await,）
+function *g(){}
+const g = *g(); //不会执行
+g.next(); //改阶段执行，结束时，在函数内触发g.next();让下一阶段执行，这样就不用手动执行g.next();
+g.next();
+
+
+function Fn(){
+    outputNum = function(){console.log(1)}
+    return this;
+}
+Fn.outputNum = function(){console.log(2)}
+Fn.prototype.outputNum = function(){console.log(3)}
+var outputNum = function(){console.log(4)}
+function outputNum(){
+    console.log(5)
+}
+
+1.2
+2.4
+3.4
+4.4
+5.2
+6.4
+7.3
+
+
+节流防抖
+https://www.jianshu.com/p/c8b86b09daf0
